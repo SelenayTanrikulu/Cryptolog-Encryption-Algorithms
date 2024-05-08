@@ -1,0 +1,37 @@
+def caesar_cipher(message, mode):
+    key = 3  # Sabit anahtar değeri
+    alphabet = 'abcçdefgğhıijklmnoöprsştuüvyzABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ'
+    translated_message = ""
+
+    if mode == 'd':
+        key = -key
+
+    for char in message:
+        if char in alphabet:
+            # Karakterin alfabe içindeki indeksini buluyoruz
+            index = alphabet.index(char)
+            # Şifreleme/çözme için indeksi kaydırıyoruz
+            shifted_index = (index + key) % len(alphabet)
+            # Kaydırılmış indekse karşılık gelen karakteri alıyoruz ve orijinal harfin büyük/küçük olmasını koruyoruz
+            if char.islower():
+                translated_message += alphabet[shifted_index].lower()
+            else:
+                translated_message += alphabet[shifted_index].upper()
+        else:
+            translated_message += char
+
+    return translated_message
+
+def main():
+    mode = input("Encrypt or Decrypt? (e or d): ").lower()  # Küçük büyük harfe duyarlılık için küçük harfe dönüştürme
+    message = input("Enter a message: ")
+
+    if mode not in ['e', 'd']:
+        print("Invalid mode. Please enter 'e' for encryption or 'd' for decryption.")
+        return
+
+    result = caesar_cipher(message.replace(" ", ""), mode)  # Boşluk karakterlerini kaldırarak şifreleme işlemine başlıyoruz
+    print("Result:", result)
+
+if __name__ == "__main__":
+    main()
